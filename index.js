@@ -18,6 +18,9 @@ const farmItemsCollection = client
   .db("agroMela")
   .collection("farmItems");
 
+  const ProductsCollection = client.db("agroMela").collection("products");
+  const serviceCollection = client.db("agroMela").collection("services")
+
 async function connectToMongoDB() {
   try {
     await client.connect();
@@ -27,14 +30,25 @@ async function connectToMongoDB() {
     console.error("MongoDB connection failed:", err);
   }
 }
-
+// farmItems 
 app.get("/farmItems", async (req, res) => {
   const result = await farmItemsCollection.find().toArray();
   res.send(result);
 });
+// products
+app.get("/products", async(req, res)=>{
+  const result = await ProductsCollection.find().toArray();
+  res.send(result)
+})
+// service
+app.get("/services", async (req, res)=>{
+  const serviceResult = await serviceCollection.find().toArray();
+  res.send(serviceResult);
+})
+
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("agro mele server is cooking");
 });
 
 connectToMongoDB();
